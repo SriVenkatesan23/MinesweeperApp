@@ -11,7 +11,7 @@ public class Tile {
 
 
 
-	public Tile(int startX, int startY, int startWidth, int startHeight)//default constructor for each tile
+	public Tile(int startX, int startY, int startWidth, int startHeight) //default constructor for each tile
 	{
 		x = startX;
 		y = startY;
@@ -25,10 +25,17 @@ public class Tile {
 
 	}
 
+
+	/**
+	* Gets called when a tile is clicked, to see which tile has been clicked
+	*/
 	public boolean contains(int checkX, int checkY){
 		return (checkX > x) && (checkY > y) && (checkX < x + width) && (checkY < y + height);
 	}
 
+	/**
+	* Sets the display value (bombsNearBy or X for mine) when the user clicks on a tile or when revealSurrounding is called
+	*/
 	public void setDisplayValue(){
 		
 		if(this.isBomb){

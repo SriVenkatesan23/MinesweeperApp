@@ -4,8 +4,8 @@ import java.util.*;
 public class Board {
 
 	Tile[][] board;
-	boolean gameOver;
-	boolean win;
+	boolean gameOver; //will be used to reset game if it ends
+	boolean win; //will be used to reset game if it ends
 	int noOfBombs;
 	int tilesOpened;
 	int x, y;

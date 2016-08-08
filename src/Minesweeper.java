@@ -25,7 +25,7 @@ public class Minesweeper extends JFrame implements MouseListener  {
 	}
 	
 	/**
-	 * Initializes applet upon which the game will be played
+	 * Initializes window in which the game will be played
 	 */
 	public Minesweeper() 
 	{
