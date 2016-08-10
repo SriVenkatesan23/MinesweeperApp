@@ -8,9 +8,11 @@ public class Board {
 	boolean win; //will be used to reset game if it ends
 	int noOfBombs;
 	int tilesOpened;
-	int x, y;
-	int width, height;
-	int hw;
+	final int x = 59;  //board position should never change
+	final int y = 110;
+	final int width = 560;
+	final int height = 560; 
+	int hw; //number of tiles on the board
 	
 	/**
 	 * 
@@ -24,26 +26,17 @@ public class Board {
 	 * bombsNearBy counter
 	 */
 	
-	public Board(int x, int y, int width, int height, int size){
+	public Board(int size){
 		hw=size;
 		this.board=new Tile[hw][hw];
-		this.x = x;
-		this.y = y;
-		this.height = height;
-		this.width = width;
 		gameOver=false;
 		noOfBombs=(int)(hw*1.5);
 		tilesOpened=0;
 		win=false;
-		
-		
-		
 		this.board = setTileNeighbors(); //sets each tile's right up down etc neighbor
 		this.board = addBombs(); //adds bombs into the board
 		this.board = incrBombs(this.board);
-		
 	}
-
 	
 	/**
 	 * @param checkX 
@@ -63,7 +56,6 @@ public class Board {
 						gameOver=true;
 						return this;
 					}
-					
 					else if(board[r][c].bombsNearBy==0){//if the clicked tile is empty, set values for all surrounding tiles
 						board[r][c]=this.revealSurrounding(board[r][c]);
 					}
@@ -75,7 +67,6 @@ public class Board {
 			}
 		}
 		return this;
-
 	}
 
 	public void display(Graphics g) { //prints out the board so the players can see it
@@ -85,18 +76,17 @@ public class Board {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * recursively shows surrounding tiles if clicked tile is empty
-	 * @param t
+	 * @param t = the tile that has been clicked
 	 * @return
 	 */
 	public Tile revealSurrounding(Tile t){
-		
+
 		if(t.right!=null && !t.right.isBomb && t.right.display.equals(" ")){
 			t.right.setDisplayValue(); tilesOpened++;
-			
+
 			if(t.right.bombsNearBy==0) 
 				t.right=revealSurrounding(t.right);
 		}
@@ -136,13 +126,14 @@ public class Board {
 		}
 		if(t.dleft!=null && !t.dleft.isBomb && t.dleft.display.equals(" ")){
 			t.dleft.setDisplayValue(); tilesOpened++;
-			
+
 			if(t.dleft.bombsNearBy==0)
 				t.dleft=revealSurrounding(t.dleft);
 		}
 
 		return t;
 	}
+	
 	/**
 	 * goes through grid and sets "neighbor" pointers of each tile
 	 */
@@ -180,16 +171,13 @@ public class Board {
 				}
 			}
 		}
-		
-		
-		
 		return board;
 	}
 	/**
 	 * Inserts noOfBombs amount of bombs into the gameBoard
 	 */
 	public Tile[][] addBombs(){
-		
+
 		int counter=0;
 		while(counter<noOfBombs){
 			int a=new Random().nextInt(hw);
@@ -199,9 +187,8 @@ public class Board {
 				counter++;
 			}
 		}
-		
 		return this.board;
-		
+
 	}
 	/**
 	 * fixes bombs nearby indicator for each tile
@@ -210,7 +197,6 @@ public class Board {
 
 		for(int r = 0; r < hw; r++){
 			for (int c = 0; c < hw; c++){
-				
 				if(board[r][c].isBomb){ //bomb tiles have a bombsNearBy count of 0
 					continue;
 				}
@@ -222,7 +208,6 @@ public class Board {
 				if( board[r][c].dleft!=null && board[r][c].dleft.isBomb) board[r][c].bombsNearBy++;
 				if( board[r][c].tright!=null && board[r][c].tright.isBomb) board[r][c].bombsNearBy++;
 				if( board[r][c].tleft!=null && board[r][c].tleft.isBomb) board[r][c].bombsNearBy++;
-				
 			}
 		}
 		return this.board;
